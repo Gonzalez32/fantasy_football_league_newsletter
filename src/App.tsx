@@ -1,9 +1,15 @@
 import React from 'react';
 import './App.css';
+import YahooAuth from './components/YahooAuth';
+import StandingsTable from './components/StandingsTable';
+import PlayerStatsTable from './components/PlayerStatsTable';
+import WeeklySummary from './components/WeeklySummary';
+import MyTeam from './components/MyTeam';
 
 function App() {
   return (
     <div className="App">
+      <WeeklySummary />
       {/* Hero Section */}
       <section className="hero is-primary">
         <div className="hero-body">
@@ -17,6 +23,12 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Yahoo API Integration Section */}
+      <YahooAuth />
+      <MyTeam />
+      <StandingsTable />
+      <PlayerStatsTable />
 
       {/* Main Content */}
       <section className="section">
@@ -42,6 +54,18 @@ function App() {
                 <div className="content">
                   <p>Current league rankings and playoff race updates...</p>
                   <button className="button is-primary">View Full Standings</button>
+                </div>
+              </div>
+
+              <div className="box">
+                <h3 className="title is-4">🔄 Waiver Wire Watch</h3>
+                <div className="content">
+                  <p>Top available players this week:</p>
+                  <ul>
+                    <li>Player A - RB - 15.2 pts last week</li>
+                    <li>Player B - WR - 12.8 pts last week</li>
+                    <li>Player C - QB - 18.5 pts last week</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -73,6 +97,21 @@ function App() {
                   </ul>
                 </div>
               </div>
+
+              <div className="box">
+                <h3 className="title is-5">🏥 Injury Report</h3>
+                <div className="content">
+                  <div className="notification is-danger is-light">
+                    <strong>Out:</strong> Player X (RB) - Ankle
+                  </div>
+                  <div className="notification is-warning is-light">
+                    <strong>Questionable:</strong> Player Y (WR) - Hamstring
+                  </div>
+                  <div className="notification is-success is-light">
+                    <strong>Probable:</strong> Player Z (QB) - Shoulder
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -82,7 +121,10 @@ function App() {
       <footer className="footer">
         <div className="content has-text-centered">
           <p>
-            <strong>Fantasy Football League Newsletter</strong> - Built with React and Bulma
+            <strong>Fantasy Football League Newsletter</strong> - Built with React, Bulma, and Yahoo Fantasy API
+          </p>
+          <p className="is-size-7">
+            League: Carrots Inglorious League 25 (ID# 223443)
           </p>
         </div>
       </footer>
@@ -90,4 +132,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
