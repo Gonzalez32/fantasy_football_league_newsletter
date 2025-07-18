@@ -1,0 +1,5 @@
+/* Minimal App.css to resolve missing file error */
+body {
+  margin: 0;
+  font-family: sans-serif;
+} 

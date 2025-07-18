@@ -1,10 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const xml2js = require('xml2js');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors());
@@ -13,11 +14,16 @@ app.use(express.json());
 // Yahoo Fantasy API configuration
 const YAHOO_CLIENT_ID = process.env.YAHOO_CLIENT_ID;
 const YAHOO_CLIENT_SECRET = process.env.YAHOO_CLIENT_SECRET;
-const YAHOO_REDIRECT_URI = 'http://localhost:5000/auth/callback';
+const YAHOO_REDIRECT_URI = 'http://localhost:5001/auth/callback';
 
 // Store tokens (in production, use a database)
 let accessToken = null;
 let refreshToken = null;
+
+// Helper to parse XML to JSON
+const parseXml = async (xml) => {
+  return await xml2js.parseStringPromise(xml, { explicitArray: false });
+};
 
 // Routes
 
@@ -76,11 +82,12 @@ app.get('/api/league/:leagueId', async (req, res) => {
       {
         headers: {
           'Authorization': `Bearer ${accessToken}`
-        }
+        },
+        responseType: 'text',
       }
     );
-
-    res.json(response.data);
+    const json = await parseXml(response.data);
+    res.json(json);
   } catch (error) {
     console.error('League API error:', error.response?.data || error.message);
     res.status(500).json({ error: 'Failed to fetch league data' });
@@ -126,11 +133,12 @@ app.get('/api/players/:playerKeys', async (req, res) => {
       {
         headers: {
           'Authorization': `Bearer ${accessToken}`
-        }
+        },
+        responseType: 'text',
       }
     );
-
-    res.json(response.data);
+    const json = await parseXml(response.data);
+    res.json(json);
   } catch (error) {
     console.error('Player API error:', error.response?.data || error.message);
     res.status(500).json({ error: 'Failed to fetch player data' });
@@ -151,11 +159,12 @@ app.get('/api/standings/:leagueId', async (req, res) => {
       {
         headers: {
           'Authorization': `Bearer ${accessToken}`
-        }
+        },
+        responseType: 'text',
       }
     );
-
-    res.json(response.data);
+    const json = await parseXml(response.data);
+    res.json(json);
   } catch (error) {
     console.error('Standings API error:', error.response?.data || error.message);
     res.status(500).json({ error: 'Failed to fetch standings data' });

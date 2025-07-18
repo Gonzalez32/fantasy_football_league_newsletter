@@ -27,7 +27,7 @@ export const yahooApiService = {
   getAuthUrl: async () => {
     try {
       const response = await axios.get('http://localhost:5000/auth/yahoo');
-      return response.data.authUrl;
+      return (response.data as any).authUrl;
     } catch (error) {
       console.error('Failed to get auth URL:', error);
       throw error;
@@ -35,10 +35,10 @@ export const yahooApiService = {
   },
 
   // Get league information
-  getLeagueInfo: async (leagueId: string) => {
+  getLeagueInfo: async (leagueId: string): Promise<any> => {
     try {
       const response = await apiClient.get(`/league/${leagueId}`);
-      return response.data;
+      return response.data as any;
     } catch (error) {
       console.error('Failed to fetch league info:', error);
       throw error;
@@ -46,10 +46,10 @@ export const yahooApiService = {
   },
 
   // Get league standings
-  getStandings: async (leagueId: string) => {
+  getStandings: async (leagueId: string): Promise<any> => {
     try {
       const response = await apiClient.get(`/standings/${leagueId}`);
-      return response.data;
+      return response.data as any;
     } catch (error) {
       console.error('Failed to fetch standings:', error);
       throw error;
@@ -57,10 +57,10 @@ export const yahooApiService = {
   },
 
   // Get team information
-  getTeamInfo: async (teamKey: string) => {
+  getTeamInfo: async (teamKey: string): Promise<any> => {
     try {
       const response = await apiClient.get(`/team/${teamKey}`);
-      return response.data;
+      return response.data as any;
     } catch (error) {
       console.error('Failed to fetch team info:', error);
       throw error;
@@ -68,10 +68,10 @@ export const yahooApiService = {
   },
 
   // Get player information
-  getPlayerInfo: async (playerKeys: string) => {
+  getPlayerInfo: async (playerKeys: string): Promise<any> => {
     try {
       const response = await apiClient.get(`/players/${playerKeys}`);
-      return response.data;
+      return response.data as any;
     } catch (error) {
       console.error('Failed to fetch player info:', error);
       throw error;
@@ -79,10 +79,10 @@ export const yahooApiService = {
   },
 
   // Health check
-  healthCheck: async () => {
+  healthCheck: async (): Promise<any> => {
     try {
       const response = await apiClient.get('/health');
-      return response.data;
+      return response.data as any;
     } catch (error) {
       console.error('Health check failed:', error);
       throw error;
